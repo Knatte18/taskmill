@@ -65,6 +65,35 @@ See [BUILD.md](BUILD.md) for the full build spec.
 
 ---
 
+## Recommended Settings
+
+For the task skills to work correctly, Claude Code needs permission to run tools without constant prompting. Add the following to your `~/.claude/settings.json`, or to a local repo's `.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "MultiEdit",
+      "Read",
+      "Write",
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)"
+    ]
+  }
+}
+```
+
+The `allow` list grants the tool permissions the skills rely on. The `deny` list is a safety net against destructive commands.
+
+---
+
 ## Acknowledgments
 
 Based on [claude-code-plugins](https://github.com/motlin/claude-code-plugins) by Craig Motlin.
