@@ -1,6 +1,6 @@
 """Append a new item to a file.
 
-Usage: hanf_task_add.py <file-path> <Title: description>
+Usage: task_add.py <file-path> <Title: description>
 
 If the input contains a colon, the part before becomes a bold title
 and the part after becomes an indented description.
@@ -10,11 +10,14 @@ Creates the file if it doesn't exist.
 """
 
 import sys
+from pathlib import Path
+
+from task_lock import lock_backlog
 
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: hanf_task_add.py <file-path> <Title: description>", file=sys.stderr)
+        print("Usage: task_add.py <file-path> <Title: description>", file=sys.stderr)
         sys.exit(1)
 
     file_path = sys.argv[1]
@@ -28,8 +31,9 @@ def main():
     else:
         entry = f"- [ ] **{text.strip()}**\n\n"
 
-    with open(file_path, "a", encoding="utf-8") as f:
-        f.write(entry)
+    with lock_backlog(file_path):
+        with open(file_path, "a", encoding="utf-8") as f:
+            f.write(entry)
 
     print(f"Added: - [ ] **{title if ':' in text else text.strip()}**")
 

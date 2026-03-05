@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-03-05 **Fixed build reference in plan steps**
+- Changed plan step example from nonexistent `python scripts/build_skills.py` to `Regenerate build output following BUILD.md`
+- Updated doc/taskflow/skill-formats.md, doc/taskflow/skill-commands.md, and corresponding build outputs
+
+## 2026-03-05 **Staleness check uses discussion start time**
+- Added `[N]` state (digit 1-9) for tasks claimed by a discussion thread
+- Added `started:` sub-bullet to backlog tasks, written when discussion begins via `hanf-discuss-task`
+- Added `started:` and `finished:` YAML frontmatter to plan files
+- Staleness check now uses `started:` from plan frontmatter instead of filename timestamp, catching changes during discussion phase
+- Created `hanf_task_claim.py` script for atomically claiming tasks with thread numbers
+- Added `model: sonnet` frontmatter to `hanf-do-planned-task` and `hanf-do-all-planned` commands
+- Updated `hanf-list-tasks` to show `[N]` (in discussion) state group
+- Updated checkbox regex in `hanf_task_complete.py` and `hanf_task_block.py` to handle digit states
+
+## 2026-03-05 **Multi-threaded planning support**
+- Changed plan timestamps from `YYYY-MM-DD-HHMM` to `YYYY-MM-DD-HHMMSS` for second-level precision
+- Added `## Files` section to plan format for listing files the plan expects to modify
+- Added staleness check to `hanf-do-planned-task` and `hanf-do-all-planned`: checks `git log` against plan timestamp and file list before implementing
+- Added file locking (`.llm/backlog.lock`) to all task scripts to prevent concurrent `backlog.md` corruption
+- Created `hanf_lock.py` shared locking module
+- Renamed existing plan files to use HHMMSS format
+- Updated all doc specs, rebuilt all skills, commands, and scripts
+
+## 2026-03-05 **Incremental skill build**
+- `hanf-skill-build` now defaults to incremental mode using `git diff --name-only HEAD -- doc/` to detect changed sources
+- Added `full` argument for complete clean + rebuild
+- Added "discussion only" rule to `hanf-discuss-task` to prevent auto-entering plan mode
+- Updated BUILD.md to document incremental behavior
+
+## 2026-03-05 **Plan steps must not use slash command syntax**
+- Added "Plan step rules" to plan format spec in skill-formats.md
+- Added guidance to hanf-finalize-plan in skill-commands.md
+- Steps must describe concrete actions, not reference `/hanf-*` commands or `~/.claude/skills/` files
+
 ## 2026-03-04 **Added UTC clock time to plan filenames**
 - Changed plan naming from `YYYY-MM-DD-<slug>.md` to `YYYY-MM-DD-HHMM-<slug>.md` (UTC)
 - Updated skill-llm-context.md, skill-commands.md, skill-formats.md
