@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-03-06 **Shortened plugin command names**
+- Dropped `task-`/`mill-` prefixes from all plugin commands — now invoked as `/taskmill.discuss`, `/taskmill.finalize`, `/taskmill.do`, `/taskmill.do-all`, `/taskmill.list`, `/taskmill.add`, `/taskmill.retry`, `/taskmill.commit`, `/taskmill.log`
+- `task-plan` renamed to `finalize` (more descriptive of what it does)
+- `mill-commit` and `mill-logentry` renamed to `commit` and `log`
+- Updated `skill-commands.md` section headings, cross-references, and workflow diagram
+- Updated `skill-formats.md` command name references and plan step rules example
+- Updated `BUILD.md` section pattern description and result listing
+- Regenerated all 9 command files in `build/taskmill/commands/` with new names
+
 ## 2026-03-05 **New command: mill-logentry**
 - Added `mill-logentry` command that generates a changelog entry from recent git commits and prints to stdout
 - Accepts optional cutoff time, language, and length/emphasis arguments

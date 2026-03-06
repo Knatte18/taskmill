@@ -18,6 +18,6 @@ Write an implementation plan from the current discussion.
 
 ## Rules
 
-- Steps must use concrete actions (e.g. `Regenerate build output following BUILD.md`), never `/task-*` commands or `@taskmill:` skill references — the executor treats these as requiring user invocation or skill loading, stalling execution.
+- Steps must use concrete actions (e.g. `Regenerate build output following BUILD.md`), never `/taskmill.*` commands or `@taskmill:` skill references — the executor treats these as requiring user invocation or skill loading, stalling execution.
 - Do not edit any files other than `doc/backlog.md` and `.llm/plans/`. No code edits, no build changes.
 - Use @taskmill:formats skill for plan and backlog format rules.

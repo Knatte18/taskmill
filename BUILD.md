@@ -43,7 +43,7 @@ Every `skill-*.md` becomes a SKILL.md file in its own directory:
 
 ### Commands → `build/taskmill/commands/`
 
-Each `## task-*` or `## mill-*` section in `doc/taskflow/skill-commands.md` → `build/taskmill/commands/<command-name>.md`
+Each `## <name>` section in `doc/taskflow/skill-commands.md` → `build/taskmill/commands/<name>.md`
 
 **Exception:** `mill-build` and `mill-deploy` are repo-local dev commands. They are NOT included in the plugin output — they live only in `.claude/commands/` inside the taskmill repo.
 
@@ -80,8 +80,15 @@ build/taskmill/
 ├── .claude-plugin/
 │   └── plugin.json              (plugin manifest)
 ├── commands/
-│   ├── task-*.md                (one per task command)
-│   └── mill-commit.md           (mill-build and mill-deploy are excluded)
+│   ├── discuss.md               (one file per command section)
+│   ├── finalize.md
+│   ├── do.md
+│   ├── do-all.md
+│   ├── list.md
+│   ├── add.md
+│   ├── retry.md
+│   ├── commit.md
+│   └── log.md                   (mill-build and mill-deploy are excluded)
 ├── skills/
 │   ├── conversation/SKILL.md    (core — loads on startup)
 │   ├── workflow/SKILL.md        (core — loads on startup)

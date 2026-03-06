@@ -14,7 +14,7 @@ Discuss a backlog task. Does **not** write a plan.
 2. If the claimed task has a `plan:` sub-bullet, read and summarize the existing plan, then continue discussion from there.
 3. Read relevant codebase sections.
 4. Ask clarifying questions about approach, constraints, and design.
-5. Discussion continues until the user calls `task-plan`.
+5. Discussion continues until the user calls `finalize`.
 
 ## Rules
 

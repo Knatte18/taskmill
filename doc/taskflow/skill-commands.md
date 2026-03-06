@@ -1,10 +1,10 @@
 # Commands Skill
 
-Defines the task-* and mill-* commands for task management and git operations.
+Defines the commands for task management and git operations.
 
 ---
 
-## task-discuss
+## discuss
 
 Discuss a backlog task. Does **not** write a plan.
 
@@ -14,13 +14,13 @@ Discuss a backlog task. Does **not** write a plan.
 - If the task has a `plan:` sub-bullet, reads and summarizes the existing plan, then continues discussion from there.
 - Reads relevant codebase sections.
 - Asks clarifying questions about approach, constraints, and design.
-- Discussion continues until the user calls `task-plan`.
+- Discussion continues until the user calls `finalize`.
 - Do not enter plan mode or write plan files. This command is discussion only.
 - Do not edit any files other than `doc/backlog.md` (for claiming the task). No code edits, no file creation.
 
 ---
 
-## task-plan
+## finalize
 
 Write a plan from the current discussion.
 
@@ -37,7 +37,7 @@ Write a plan from the current discussion.
 
 ---
 
-## task-do
+## do
 
 Implement the next planned task. Does **not** commit.
 
@@ -51,11 +51,11 @@ Implement the next planned task. Does **not** commit.
 - If a step fails: marks `- [!]` and blocks the task via script.
 - Runs build + test after all steps (see `@taskmill:csharp-build`).
 - If all steps complete: deletes task from `doc/backlog.md` (via `--delete`), updates `doc/changelog.md`.
-- Does **not** commit — user calls `mill-commit` when ready.
+- Does **not** commit — user calls `commit` when ready.
 
 ---
 
-## task-do-all
+## do-all
 
 Implement all planned tasks. Commits after **each** completed task.
 
@@ -68,12 +68,12 @@ Implement all planned tasks. Commits after **each** completed task.
   3. If a step fails: mark `- [!]`, block the task, move to the next task.
   4. Run build + test.
   5. Delete task from `doc/backlog.md` (via `--delete`), update `doc/changelog.md`.
-  6. Commit and push (using `mill-commit` workflow).
+  6. Commit and push (using `commit` workflow).
 - Stops when no planned tasks remain.
 
 ---
 
-## task-list
+## list
 
 Show task status and let the user pick one to discuss.
 
@@ -81,23 +81,23 @@ Show task status and let the user pick one to discuss.
 - Prints status summary: `Status: 1 prioritized | 1 in discussion | 2 planned | 3 unplanned | 1 blocked`.
 - Groups open tasks by state: prioritized `[>]`, in discussion `[N]`, planned `[p]`, unplanned `[ ]`, blocked `[!]`.
 - Shows plan file path and blocked reason if applicable.
-- User picks a task number to start discussion (proceeds as `task-discuss`).
+- User picks a task number to start discussion (proceeds as `discuss`).
 
 ---
 
-## task-add
+## add
 
 Add an item to a file with `- [ ] **Title**` format.
 
 - Takes file path and `Title: description` as parameters.
 - If the input contains a colon, the part before becomes the bold title and the part after becomes an indented description.
 - If no colon, the entire input becomes the bold title with no description.
-- Works on both `doc/backlog.md` and `.llm/plans/YYYY-MM-DD-HHMMSS-<slug>.md`.
+- Works on `doc/backlog.md` and `.llm/plans/YYYY-MM-DD-HHMMSS-<slug>.md`.
 - Appends the formatted entry followed by a blank line.
 
 ---
 
-## mill-commit
+## commit
 
 Commit and push. No rebase.
 
@@ -107,7 +107,7 @@ Commit and push. No rebase.
 
 ---
 
-## mill-logentry
+## log
 
 Generate a changelog entry from recent git commits. Prints to stdout only — does not write to `doc/changelog.md`.
 
@@ -125,7 +125,7 @@ Generate a changelog entry from recent git commits. Prints to stdout only — do
 
 ---
 
-## task-retry
+## retry
 
 Retry the first blocked task.
 
@@ -148,30 +148,31 @@ Read and follow `BUILD.md`.
 
 ## mill-deploy
 
-Print the commands to reinstall the plugin. Do NOT run them — they must be run outside Claude Code in a terminal.
+Reinstall the taskmill plugin from the local marketplace.
 
-- Print: `claude plugin uninstall taskmill@taskmill`
-- Print: `claude plugin install taskmill@taskmill`
-- Note: if `claude` is not on PATH, use `npx @anthropic-ai/claude-code` instead of `claude`.
-- Remind the user to restart Claude Code after running them.
-- For first-time setup, also print: `claude plugin marketplace add c:/Code/taskmill`
+- Run `claude plugin uninstall taskmill@taskmill` (ignore errors if not yet installed).
+- Run `claude plugin install taskmill@taskmill`.
+- If `claude` is not found, try `npx @anthropic-ai/claude-code` instead.
+- If both fail, print the commands for the user to run manually in a terminal.
+- Remind the user to restart Claude Code after installation.
+- For first-time setup, also run: `claude plugin marketplace add c:/Code/taskmill`
 
 ---
 
 ## Workflow Summary
 
 ```
-backlog.md          task-discuss             .llm/plans/
+backlog.md          discuss                  .llm/plans/
 ┌──────────┐       ┌────────────────┐       ┌───────────┐
 │ - [ ] ... │──────▶│  Discussion    │──────▶│ - [ ] ... │
 │ - [>] ... │       │  (no plan yet) │       │ - [ ] ... │
 └──────────┘       └───────┬────────┘       └─────┬─────┘
                            │                      │
-                       task-plan              task-do
+                       finalize               do
                            │                      │
                    adds plan: link         marks [x] per step
                    in backlog.md           runs build+test
                                                   │
-                                           mill-commit (manual)
-                                           or auto in task-do-all
+                                           commit (manual)
+                                           or auto in do-all
 ```

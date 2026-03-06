@@ -16,4 +16,4 @@ Implement the next planned task. Does **not** commit.
 6. If a step fails: mark `- [!]` and block the task via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py`.
 7. Run build + test after all steps. Use @taskmill:csharp-build skill.
 8. If all steps complete: run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py --delete doc/backlog.md`, then update `doc/changelog.md`.
-9. Does **not** commit — user calls `mill-commit` when ready.
+9. Does **not** commit — user calls `commit` when ready.

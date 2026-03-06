@@ -1,30 +1,26 @@
 ---
-description: "Print commands to reinstall the taskmill plugin"
+description: "Deploy built skills by reinstalling the taskmill plugin"
 ---
 
 ## Behavior
 
-Print the commands the user needs to run in a terminal to reinstall the plugin. Do NOT run them — they must be run outside Claude Code.
+Reinstall the taskmill plugin from the local marketplace.
 
-### Output
+### Steps
 
-Print this:
-
-```
-Run these in a terminal (not inside Claude Code):
-
-claude plugin uninstall taskmill@taskmill
-claude plugin install taskmill@taskmill
-```
-
-If `claude` is not on PATH, use `npx @anthropic-ai/claude-code` instead of `claude`.
-
-Then remind the user to restart Claude Code after running them.
+1. Run `claude plugin uninstall taskmill@taskmill` (ignore errors if not yet installed).
+2. Run `claude plugin install taskmill@taskmill`.
+3. Print confirmation that the plugin was reinstalled.
 
 ### First-time setup
 
-If the marketplace has not been added yet, also print:
+If the marketplace has not been added yet:
 
-```
-claude plugin marketplace add c:/Code/taskmill
-```
+1. Run `claude plugin marketplace add c:/Code/taskmill` (the repo root containing `.claude-plugin/marketplace.json`).
+2. Then proceed with install as above.
+
+### Fallback
+
+If `claude` is not found on PATH, try `npx @anthropic-ai/claude-code` instead. If that also fails, print the commands for the user to run manually and explain they need `claude` CLI available.
+
+Remind the user to restart Claude Code after installation.
