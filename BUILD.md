@@ -102,6 +102,7 @@ build/taskmill/
 │   ├── formats/SKILL.md
 │   ├── code-quality/SKILL.md
 │   ├── cli/SKILL.md
+│   ├── testing/SKILL.md
 │   ├── linting/SKILL.md
 │   ├── git/SKILL.md
 │   ├── csharp-build/SKILL.md

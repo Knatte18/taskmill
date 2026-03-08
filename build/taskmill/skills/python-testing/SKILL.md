@@ -11,9 +11,7 @@ Testing conventions for Python projects using pytest.
 
 ## General Principles
 
-- **Strict assertions.** Be specific. Prefer exact equality over loose containment checks.
-- **Mocking is a last resort.** Prefer fakes, stubs, or in-memory implementations. Mock only external dependencies you do not control.
-- **Test names describe behavior**, not implementation. The name should read as a sentence describing what is expected.
+See `@taskmill:testing` for language-agnostic rules (assertion strictness, mock discipline, naming).
 
 ---
 

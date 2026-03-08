@@ -18,6 +18,7 @@ Use the appropriate skill based on the current activity:
 | Before editing code | `@taskmill:code-quality` |
 | When running shell commands | `@taskmill:cli` |
 | For project-specific style rules | `@taskmill:linting` |
+| When writing or reviewing tests | `@taskmill:testing` (+ language-specific `{lang}-testing`) |
 | For language-specific build, test, or comments | Detect language, then use `@taskmill:{lang}-*` (see below) |
 | For all git operations | `@taskmill:git` |
 | For file format specs (backlog, plans) | `@taskmill:formats` |

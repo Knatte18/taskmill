@@ -11,9 +11,7 @@ Swappable testing conventions for C#/.NET projects. Replace or extend this file 
 
 ## General Principles
 
-- **Strict assertions.** Be specific. Prefer exact equality over loose containment checks.
-- **Mocking is a last resort.** Prefer fakes, stubs, or in-memory implementations. Never mock your own code — mock only external dependencies you don't control.
-- **Test names describe behavior**, not implementation. The name should read as a sentence describing what is expected.
+See `@taskmill:testing` for language-agnostic rules (assertion strictness, mock discipline, naming).
 
 ---
 

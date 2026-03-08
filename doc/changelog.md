@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-03-08 **Added language-agnostic testing skill**
+- Created base `testing` skill with universal principles: strict assertions, mock discipline (terminology: mock vs fake vs stub), naming conventions, record/replay preference
+- Updated `csharp-testing` and `python-testing` to reference `@taskmill:testing` instead of repeating general principles
+- Added `@taskmill:testing` to workflow skill invocation table
+
 ## 2026-03-08 **Revised log command to use git commits only**
 - Removed changelog.md dependency: no longer reads changelog for cutoff detection or tone matching
 - Made cutoff argument required (e.g. `today`, `yesterday`, `2h ago`)
