@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-08 **Revised plan step format for better granularity and mandatory tests**
+- Added step-writing rules to `finalize` command: one step per file, explicit file paths and function/class names, no compound steps
+- Added mandatory test steps: plans must include test steps when `## Files` contains source code files
+- Replaced minimal plan example in `skill-formats.md` with a detailed example showing per-file steps and test steps
+- Updated `finalize.md`, `finalize-do.md`, and `finalize-do-commit.md` build outputs with the new guidance
+
 ## 2026-03-08 **Added Python skills and language-agnostic build routing**
 - Created `python-build` skill: `ruff check .` + `pytest` as mandatory build commands
 - Created `python-comments` skill: module docstrings required, concise function docstrings, no Args/Returns sections, imperative inline comments

@@ -83,19 +83,25 @@ finished: 2026-03-04T15:45:00Z
 # Refactor data validation layer
 
 ## Context
-Summary of the discussion that led to this plan.
-Key decisions and constraints identified.
+Extract validators into a clean interface. Currently validation logic is
+inline in ValidationService.Process(). Use FluentValidation as the backing
+library. Keep the existing ValidationService as a thin orchestrator.
 
 ## Files
 - src/Services/ValidationService.cs
 - src/Interfaces/IValidator.cs
-- tests/ValidationTests.cs
+- src/Validators/OrderValidator.cs
+- src/Validators/CustomerValidator.cs
+- tests/Validators/OrderValidatorTests.cs
+- tests/Validators/CustomerValidatorTests.cs
 
 ## Steps
-- [ ] Extract IValidator interface from existing validation logic
-- [ ] Implement FluentValidation-based validators
-- [ ] Update all call sites to use new interface
-- [ ] Write tests for new validators
+- [ ] Create `src/Interfaces/IValidator.cs`: define `IValidator<T>` interface with `Validate(T entity)` returning `ValidationResult`.
+- [ ] Create `src/Validators/OrderValidator.cs`: implement `IValidator<Order>` using FluentValidation. Validate `OrderDate`, `TotalAmount > 0`, and `Items` not empty.
+- [ ] Create `src/Validators/CustomerValidator.cs`: implement `IValidator<Customer>` using FluentValidation. Validate `Email` format and `Name` not blank.
+- [ ] Update `src/Services/ValidationService.cs`: replace inline validation in `Process()` with calls to injected `IValidator<T>` instances. Register validators in DI.
+- [ ] Create `tests/Validators/OrderValidatorTests.cs`: test `Validate()` with valid order, missing items, zero amount, and null date.
+- [ ] Create `tests/Validators/CustomerValidatorTests.cs`: test `Validate()` with valid customer, blank name, and malformed email.
 ```
 
 **YAML frontmatter:**
@@ -107,6 +113,10 @@ The `## Files` section lists files the plan expects to modify. Used for stalenes
 Steps are marked `[x]` progressively as CC completes them, and `[!]` if a step fails.
 
 **Plan step rules:**
-- Steps must describe concrete actions, not reference `/taskmill.*` slash commands or `@taskmill:` skill names. The LLM executor may interpret these as requiring user invocation or skill loading, stalling execution.
+- **One step per file** (or a small cluster of tightly coupled files). Never bundle unrelated file operations into a single step.
+- **Explicit names.** Each step must include the target file path and the specific functions, classes, or fields being added or changed.
+- **No slash commands or skill references.** Steps must describe concrete actions, not reference `/taskmill.*` slash commands or `@taskmill:` skill names. The LLM executor may interpret these as requiring user invocation or skill loading, stalling execution.
+- **Test steps required for source code tasks.** When `## Files` contains source code files, the plan must include steps for writing new tests or updating existing tests that cover the changes. Omit test steps only when the task is purely doc or config changes.
 - Bad: `Run /taskmill.do` or `Follow @taskmill:csharp-build`
-- Good: `Regenerate build output following BUILD.md`
+- Bad: `Extract interface and implement validators` (compound, no file paths)
+- Good: `Create src/Interfaces/IValidator.cs: define IValidator<T> interface with Validate(T entity) returning ValidationResult.`

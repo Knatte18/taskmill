@@ -12,7 +12,7 @@ Finalize the current discussion and immediately implement the resulting task. Do
    - **YAML frontmatter:** `started:` (copied from the task's `started:` sub-bullet in `doc/backlog.md`) and `finished:` (current UTC timestamp, matches filename timestamp)
    - **Context:** summary of discussion and key decisions
    - **Files:** flat list of file paths the plan expects to modify
-   - **Steps:** concrete, actionable `- [ ]` items
+   - **Steps:** concrete, actionable `- [ ]` items (one step per file, explicit file paths and function/class names, test steps when source code is involved — see `@taskmill:formats` for full step-writing rules)
 3. Run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_plan.py doc/backlog.md "<task-name>" <plan-path>` to change state to `[p]` and add/replace the `plan:` sub-bullet.
 4. Run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_get.py --include-planned doc/backlog.md` to confirm the task is selected.
 5. Read all files listed in `## Files` as initial context.
