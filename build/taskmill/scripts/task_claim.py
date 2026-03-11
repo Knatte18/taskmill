@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import filelock
 
+from backlog_format import normalize_backlog
 from task_subbullet import upsert_subbullet
 
 CHECKBOX_RE = re.compile(r'^(\s*)- \[(.)\] ')
@@ -106,7 +107,9 @@ def main():
         now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         upsert_subbullet(lines, idx, 'started', now)
 
-        file_path.write_text(''.join(lines), encoding='utf-8')
+        content = ''.join(lines)
+        content = normalize_backlog(content)
+        file_path.write_text(content, encoding='utf-8')
         print(lines[idx].rstrip('\n'))
     finally:
         lock.release()

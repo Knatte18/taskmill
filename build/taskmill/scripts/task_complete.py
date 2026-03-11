@@ -7,17 +7,19 @@ import sys
 from pathlib import Path
 import filelock
 
+from backlog_format import normalize_backlog
+
 CHECKBOX_RE = re.compile(r'^(\s*)- \[(.)\] ')
 LOCK_PATH = Path('.llm/backlog.lock')
 
 
 def find_incomplete(lines):
-    """Find first [ ], [>], or [p] item. Returns index or None."""
+    """Find first [ ], [>], [p], or [1]-[9] item. Returns index or None."""
     for i, line in enumerate(lines):
         m = CHECKBOX_RE.match(line)
         if m:
             state = m.group(2)
-            if state in (' ', '>', 'p'):
+            if state in (' ', '>', 'p') or state.isdigit():
                 return i
     return None
 
@@ -74,7 +76,10 @@ def main():
         else:
             lines[idx] = re.sub(r'^(\s*- \[)[> p1-9p](\])', r'\1x\2', lines[idx])
 
-        file_path.write_text(''.join(lines), encoding='utf-8')
+        content = ''.join(lines)
+        if is_backlog:
+            content = normalize_backlog(content)
+        file_path.write_text(content, encoding='utf-8')
     finally:
         if lock:
             lock.release()

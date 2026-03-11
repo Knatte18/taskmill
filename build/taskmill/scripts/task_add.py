@@ -5,6 +5,8 @@ import sys
 from pathlib import Path
 import filelock
 
+from backlog_format import normalize_backlog
+
 LOCK_PATH = Path('.llm/backlog.lock')
 
 
@@ -41,6 +43,8 @@ def main():
             file_path.parent.mkdir(parents=True, exist_ok=True)
             content = ''
         content += entry
+        if is_backlog:
+            content = normalize_backlog(content)
         file_path.write_text(content, encoding='utf-8')
         print(entry.strip())
     finally:

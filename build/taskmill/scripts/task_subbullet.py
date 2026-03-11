@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 import filelock
 
+from backlog_format import normalize_backlog
+
 CHECKBOX_RE = re.compile(r'^(\s*)- \[(.)\] ')
 LOCK_PATH = Path('.llm/backlog.lock')
 
@@ -104,7 +106,10 @@ def main():
             sys.exit(1)
 
         result = upsert_subbullet(lines, idx, key, value)
-        file_path.write_text(''.join(lines), encoding='utf-8')
+        content = ''.join(lines)
+        if is_backlog:
+            content = normalize_backlog(content)
+        file_path.write_text(content, encoding='utf-8')
         print(result.rstrip('\n'))
     finally:
         if lock:

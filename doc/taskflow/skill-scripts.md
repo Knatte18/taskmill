@@ -49,7 +49,7 @@ Mark the first incomplete item as done.
 Usage: task_complete.py [--delete] <file-path>
 ```
 
-Finds first `[ ]`, `[>]`, or `[p]` item and replaces with `[x]`. Prints the completed item. Exit code 0 if found, 1 if no incomplete items.
+Finds first `[ ]`, `[>]`, `[p]`, or `[1]`-`[9]` item and replaces with `[x]`. Prints the completed item. Exit code 0 if found, 1 if no incomplete items.
 
 With `--delete`: instead of marking `[x]`, deletes the matched entry entirely (the task line, all indented sub-bullets below it, and any trailing blank line). Used for backlog tasks where `doc/changelog.md` already records the completion.
 
@@ -63,7 +63,7 @@ Mark the first incomplete item as blocked.
 Usage: task_block.py <file-path> [reason]
 ```
 
-Finds first `[ ]`, `[>]`, or `[p]` item and replaces with `[!]`. Optionally inserts a `blocked: <reason>` sub-bullet. Exit code 0 if found, 1 if no incomplete items.
+Finds first `[ ]`, `[>]`, `[p]`, or `[1]`-`[9]` item and replaces with `[!]`. Optionally inserts a `blocked: <reason>` sub-bullet. Exit code 0 if found, 1 if no incomplete items.
 
 ---
 
@@ -146,6 +146,23 @@ Usage: task_plan.py [--state STATE] <file-path> <task-name> <plan-path>
 Finds the target task by name (case-insensitive substring match against the task line). Changes its state to the value of `--state` (default: `p`). Accepts any single character including a space (`' '`). Uses `upsert_subbullet` from `task_subbullet.py` to add or replace the `plan: <plan-path>` sub-bullet.
 
 Output: the updated task line. Exit code 0 on success, 1 if task not found.
+
+---
+
+## backlog_format.py
+
+Shared normalization module for `doc/backlog.md` formatting.
+
+Exposes `normalize_backlog(text: str) -> str` as an importable function. Called by all scripts that write to `backlog.md`, right before `write_text()`.
+
+Normalization rules:
+1. Ensure the file starts with `# Backlog\n\n`. If the header is missing, prepend it. If a different `# ...` header exists on line 1, replace it.
+2. Collapse consecutive blank lines between task entries into exactly one blank line.
+3. Ensure a single trailing newline (no trailing blank lines).
+
+Not used for plan files or other checkbox files — backlog only.
+
+Scripts that call `normalize_backlog`: `task_add.py`, `task_complete.py`, `task_block.py`, `task_claim.py`, `task_plan.py`, `task_subbullet.py`.
 
 ---
 

@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 import filelock
 
+from backlog_format import normalize_backlog
+
 CHECKBOX_RE = re.compile(r'^(\s*)- \[(.)\] ')
 LOCK_PATH = Path('.llm/backlog.lock')
 
@@ -38,7 +40,7 @@ def main():
         idx = None
         for i, line in enumerate(lines):
             m = CHECKBOX_RE.match(line)
-            if m and m.group(2) in (' ', '>', 'p'):
+            if m and (m.group(2) in (' ', '>', 'p') or m.group(2).isdigit()):
                 idx = i
                 break
 
@@ -55,7 +57,10 @@ def main():
             reason_line = f'{indent}- blocked: {reason}\n'
             lines.insert(idx + 1, reason_line)
 
-        file_path.write_text(''.join(lines), encoding='utf-8')
+        content = ''.join(lines)
+        if is_backlog:
+            content = normalize_backlog(content)
+        file_path.write_text(content, encoding='utf-8')
     finally:
         if lock:
             lock.release()

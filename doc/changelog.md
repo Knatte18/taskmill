@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-03-11 **Added backlog formatting normalization**
+- Created `backlog_format.py` with `normalize_backlog()`: ensures `# Backlog` header, one blank line between task entries, single trailing newline
+- Integrated into all six mutating scripts (`task_add`, `task_complete`, `task_block`, `task_claim`, `task_plan`, `task_subbullet`)
+- Added spec section to `skill-scripts.md`
+
+## 2026-03-11 **Fixed task_complete.py and task_block.py to match claimed [N] tasks**
+- Updated `find_incomplete()` in `task_complete.py` and the equivalent check in `task_block.py` to include digits 1-9 in the state match
+- Updated spec in `skill-scripts.md` to document the corrected behavior
+
 ## 2026-03-11 **Added park flag to finalize command**
 - Added `--state` argument to `task_plan.py` (default `p`), replacing the hardcoded `[p]` substitution with a configurable state character
 - Added `--park` flag to `finalize` command: passes `--state ' '` to set the task back to `[ ]` while preserving the `plan:` sub-bullet
