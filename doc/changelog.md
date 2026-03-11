@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-11 **Added park flag to finalize command**
+- Added `--state` argument to `task_plan.py` (default `p`), replacing the hardcoded `[p]` substitution with a configurable state character
+- Added `--park` flag to `finalize` command: passes `--state ' '` to set the task back to `[ ]` while preserving the `plan:` sub-bullet
+- Added incomplete discussion guard: prompts user to choose between full finalize or park when steps are incomplete
+- Updated formats skill to document parked state (`[ ]` with `plan:` sub-bullet)
+
 ## 2026-03-11 **Enforced script-only mutations for plan files**
 - Created `task_subbullet.py`: generic script for adding/updating sub-bullets on checkbox items, with auto-detect by index (numeric) or name (substring match); exposes `upsert_subbullet()` for import
 - Created `plan_finish.py`: sets `finished:` timestamp in plan YAML frontmatter

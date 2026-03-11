@@ -38,7 +38,7 @@ High-level task list. Manually maintained by the user, updated by commands.
 
 | State | Meaning | Set by |
 |-------|---------|--------|
-| `[ ]` | Unplanned / waiting | User or `add` |
+| `[ ]` | Unplanned / waiting (with `plan:` sub-bullet: parked for later) | User, `add`, or `finalize --park` |
 | `[>]` | Prioritized / focused | User (manually) |
 | `[N]` | In discussion by thread N (any digit 1-9) | `discuss` |
 | `[p]` | Planned (has plan file) | `finalize` |

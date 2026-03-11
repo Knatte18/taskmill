@@ -30,10 +30,16 @@ def find_task_by_name(lines, name):
 
 def main():
     parser = argparse.ArgumentParser(description='Mark a task as planned with a plan file link')
+    parser.add_argument('--state', default='p',
+                        help="State character to set (default: 'p'). Use ' ' for parking.")
     parser.add_argument('file', help='Path to the backlog file')
     parser.add_argument('task_name', help='Task name (case-insensitive substring match)')
     parser.add_argument('plan_path', help='Path to the plan file')
     args = parser.parse_args()
+
+    if len(args.state) != 1:
+        print(f'--state must be a single character, got: {args.state!r}', file=sys.stderr)
+        sys.exit(1)
 
     file_path = Path(args.file)
     if not file_path.exists():
@@ -52,8 +58,11 @@ def main():
             print(f'Task not found: {args.task_name}', file=sys.stderr)
             sys.exit(1)
 
-        # Change state to [p] (any single-character state)
-        lines[idx] = re.sub(r'^(\s*- \[).(\])', r'\1p\2', lines[idx])
+        # Change state to the specified state (default: p)
+        state = args.state
+        lines[idx] = re.sub(r'^(\s*- \[).(\])',
+                            lambda m: f'{m.group(1)}{state}{m.group(2)}',
+                            lines[idx])
 
         # Add or update plan sub-bullet
         upsert_subbullet(lines, idx, 'plan', args.plan_path)

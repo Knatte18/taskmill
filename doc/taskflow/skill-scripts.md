@@ -140,10 +140,10 @@ Output: the claimed task line. Exit code 0 if claimed, 1 if no eligible task fou
 Mark a task as planned and link its plan file.
 
 ```
-Usage: task_plan.py <file-path> <task-name> <plan-path>
+Usage: task_plan.py [--state STATE] <file-path> <task-name> <plan-path>
 ```
 
-Finds the target task by name (case-insensitive substring match against the task line). Changes its state to `[p]`. Uses `upsert_subbullet` from `task_subbullet.py` to add or replace the `plan: <plan-path>` sub-bullet.
+Finds the target task by name (case-insensitive substring match against the task line). Changes its state to the value of `--state` (default: `p`). Accepts any single character including a space (`' '`). Uses `upsert_subbullet` from `task_subbullet.py` to add or replace the `plan: <plan-path>` sub-bullet.
 
 Output: the updated task line. Exit code 0 on success, 1 if task not found.
 
