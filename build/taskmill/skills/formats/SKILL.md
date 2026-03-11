@@ -110,7 +110,9 @@ library. Keep the existing ValidationService as a thin orchestrator.
 
 The `## Files` section lists files the plan expects to modify. Used for staleness detection (checking if those files changed since discussion started) and for fast implementation start (reading them upfront instead of scanning the codebase).
 
-Steps are marked `[x]` progressively as CC completes them, and `[!]` if a step fails.
+Steps are marked `[x]` progressively via `task_complete.py`, and `[!]` via `task_block.py` if a step fails.
+
+**Mutation rule:** Never use Edit or Write on existing `.llm/plans/*.md` files. Write is allowed for initial creation only (the `finalize` command creates the file). After creation, all mutations go through scripts: `task_complete.py` for marking steps, `task_block.py` for blocking, `task_subbullet.py` for sub-bullets, `plan_finish.py` for setting the `finished:` timestamp. Reading with Read is allowed.
 
 **Plan step rules:**
 - **One step per file** (or a small cluster of tightly coupled files). Never bundle unrelated file operations into a single step.

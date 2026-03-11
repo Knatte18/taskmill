@@ -93,6 +93,34 @@ Scripts affected: `task_get.py`, `task_complete.py`, `task_block.py`. `task_add.
 
 ---
 
+## task_subbullet.py
+
+Add or update a sub-bullet on a checkbox item.
+
+```
+Usage: task_subbullet.py <file-path> <identifier> "<key>: <value>"
+```
+
+Identifier auto-detection:
+- If numeric (e.g. `3`): treated as 1-based step index. Finds the Nth checkbox item in the file.
+- Otherwise: case-insensitive substring match against checkbox lines (same as `task_claim.py`).
+
+Behavior:
+1. Find the target checkbox item by identifier.
+2. Scan its indented sub-bullets (lines starting with `  ` or `\t` immediately below).
+3. If a sub-bullet with the same key already exists (matched by `- <key>:`), update it in place.
+4. If no matching key, insert the new sub-bullet at the end of the sub-bullet block.
+
+Sub-bullet format: `  - <key>: <value>\n` (two-space indent).
+
+File locking: acquire `.llm/backlog.lock` only when the file is `backlog.md`. No locking for other files.
+
+Output: the updated sub-bullet line. Exit code 0 on success, 1 if item not found.
+
+Exposes `upsert_subbullet(lines, idx, key, value)` as an importable function for use by `task_claim.py` and `task_plan.py`.
+
+---
+
 ## task_claim.py
 
 Claim a task for discussion by assigning it a thread number and recording the start time.
@@ -101,7 +129,7 @@ Claim a task for discussion by assigning it a thread number and recording the st
 Usage: task_claim.py <file-path> [task-name]
 ```
 
-Finds the target task (by name if provided, otherwise first `[>]`, then first `[ ]` — same as `task_get.py` default priority). Changes its state to `[N]` where N is the lowest unused digit (1-9) among current `[N]` states in the file. Adds a `started: <ISO 8601 UTC timestamp>` sub-bullet to the task.
+Finds the target task (by name if provided, otherwise first `[>]`, then first `[ ]` — same as `task_get.py` default priority). Changes its state to `[N]` where N is the lowest unused digit (1-9) among current `[N]` states in the file. Uses `upsert_subbullet` from `task_subbullet.py` to add the `started: <ISO 8601 UTC timestamp>` sub-bullet.
 
 Output: the claimed task line. Exit code 0 if claimed, 1 if no eligible task found.
 
@@ -115,6 +143,22 @@ Mark a task as planned and link its plan file.
 Usage: task_plan.py <file-path> <task-name> <plan-path>
 ```
 
-Finds the target task by name (case-insensitive substring match against the task line). Changes its state to `[p]`. Adds or replaces a `plan: <plan-path>` sub-bullet, inserting it after any existing sub-bullets (or directly below the task line if none exist). If a `plan:` sub-bullet already exists, it is replaced in-place.
+Finds the target task by name (case-insensitive substring match against the task line). Changes its state to `[p]`. Uses `upsert_subbullet` from `task_subbullet.py` to add or replace the `plan: <plan-path>` sub-bullet.
 
 Output: the updated task line. Exit code 0 on success, 1 if task not found.
+
+---
+
+## plan_finish.py
+
+Set the `finished:` timestamp in a plan file's YAML frontmatter.
+
+```
+Usage: plan_finish.py <plan-file>
+```
+
+Parses the `---` fenced YAML frontmatter at the top of the file. Inserts or updates `finished: <current UTC ISO 8601 timestamp>`. If no frontmatter exists, exits with error.
+
+No file locking (plan files are single-thread).
+
+Output: the updated `finished:` line. Exit code 0 on success, 1 if file not found or no frontmatter.

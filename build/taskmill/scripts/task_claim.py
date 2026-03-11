@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 import filelock
 
+from task_subbullet import upsert_subbullet
+
 CHECKBOX_RE = re.compile(r'^(\s*)- \[(.)\] ')
 LOCK_PATH = Path('.llm/backlog.lock')
 
@@ -102,16 +104,7 @@ def main():
 
         # Add started timestamp as sub-bullet
         now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-        started_line = f'  - started: {now}\n'
-
-        # Find insertion point: after the task line and any existing sub-bullets
-        insert_at = idx + 1
-        while insert_at < len(lines):
-            line = lines[insert_at]
-            if line.strip() == '' or (not line.startswith('  ') and not line.startswith('\t')):
-                break
-            insert_at += 1
-        lines.insert(insert_at, started_line)
+        upsert_subbullet(lines, idx, 'started', now)
 
         file_path.write_text(''.join(lines), encoding='utf-8')
         print(lines[idx].rstrip('\n'))

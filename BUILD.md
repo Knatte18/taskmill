@@ -68,7 +68,7 @@ Implement according to the behavioral spec: parameters, selection priority, outp
 ### Hooks → `build/taskmill/hooks/`
 
 Copy `doc/taskflow/hooks.json` → `build/taskmill/hooks/hooks.json` verbatim.
-Copy `doc/taskflow/validate-backlog.sh` → `build/taskmill/hooks/validate-backlog.sh` verbatim.
+Copy `doc/taskflow/validate-protected-files.sh` → `build/taskmill/hooks/validate-protected-files.sh` verbatim.
 Copy `doc/taskflow/validate-git.sh` → `build/taskmill/hooks/validate-git.sh` verbatim.
 
 ---
@@ -116,7 +116,7 @@ build/taskmill/
 │   └── task_*.py                (one per script)
 └── hooks/
     ├── hooks.json               (PreToolUse hook config — copied from doc/taskflow/)
-    ├── validate-backlog.sh      (blocks direct edits to backlog.md — copied from doc/taskflow/)
+    ├── validate-protected-files.sh (blocks direct edits to backlog.md and plan files — copied from doc/taskflow/)
     └── validate-git.sh          (blocks dangerous git commands — copied from doc/taskflow/)
 ```
 

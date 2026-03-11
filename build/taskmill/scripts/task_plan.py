@@ -8,6 +8,8 @@ from pathlib import Path
 
 import filelock
 
+from task_subbullet import upsert_subbullet
+
 CHECKBOX_RE = re.compile(r'^(\s*)- \[(.)\] ')
 LOCK_PATH = Path('.llm/backlog.lock')
 
@@ -53,22 +55,8 @@ def main():
         # Change state to [p] (any single-character state)
         lines[idx] = re.sub(r'^(\s*- \[).(\])', r'\1p\2', lines[idx])
 
-        # Find sub-bullet range; track existing plan: line index
-        sub_end = idx + 1
-        plan_line_idx = None
-        while sub_end < len(lines):
-            line = lines[sub_end]
-            if line.strip() == '' or (not line.startswith('  ') and not line.startswith('\t')):
-                break
-            if re.match(r'\s*-\s+plan:', line):
-                plan_line_idx = sub_end
-            sub_end += 1
-
-        plan_line = f'  - plan: {args.plan_path}\n'
-        if plan_line_idx is not None:
-            lines[plan_line_idx] = plan_line
-        else:
-            lines.insert(sub_end, plan_line)
+        # Add or update plan sub-bullet
+        upsert_subbullet(lines, idx, 'plan', args.plan_path)
 
         file_path.write_text(''.join(lines), encoding='utf-8')
         print(lines[idx].rstrip('\n'))

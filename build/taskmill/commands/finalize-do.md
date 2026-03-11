@@ -17,8 +17,8 @@ Finalize the current discussion and immediately implement the resulting task. Do
 4. Run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_get.py --include-planned doc/backlog.md` to confirm the task is selected.
 5. Read all files listed in `## Files` as initial context.
 6. **Staleness check:** read the `started:` timestamp from the plan's YAML frontmatter and run `git log --since=<started-timestamp> -- <file1> <file2> ...`. If changes are found, re-read affected files and revise plan steps before proceeding.
-7. Implement each `- [ ]` step, marking as `- [x]` immediately after completion.
-8. If a step fails: mark `- [!]` and block via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py`.
+7. Implement each `- [ ]` step. After completing each step, run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py <plan-file>` to mark it `[x]`.
+8. If a step fails: run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py <plan-file> "<reason>"` to mark it `[!]`, then block the backlog task via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py doc/backlog.md "<reason>"`.
 9. Run build + test after all steps (detect project language and use the matching `{lang}-build` skill — see `@taskmill:workflow` Language Detection).
 10. If all steps complete: run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py --delete doc/backlog.md`, then update `doc/changelog.md`.
 11. Does **not** commit — user calls `commit` when ready.

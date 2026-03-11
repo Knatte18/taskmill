@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-03-11 **Enforced script-only mutations for plan files**
+- Created `task_subbullet.py`: generic script for adding/updating sub-bullets on checkbox items, with auto-detect by index (numeric) or name (substring match); exposes `upsert_subbullet()` for import
+- Created `plan_finish.py`: sets `finished:` timestamp in plan YAML frontmatter
+- Refactored `task_claim.py` and `task_plan.py` to import `upsert_subbullet` instead of inline insertion logic
+- Replaced `validate-backlog.sh` with `validate-protected-files.sh`: blocks Edit/Write on both `backlog.md` and `.llm/plans/*.md` (Write allowed for plan creation when file doesn't exist)
+- Updated all `do*`, `retry` commands to call `task_complete.py`/`task_block.py` on plan files instead of direct Edit
+- Updated workflow and formats skills with plan file mutation rules and script tables
+
 ## 2026-03-08 **Added git guard hook**
 - Created `validate-git.sh` PreToolUse hook that blocks dangerous git commands via JSON decisions
 - `deny` for `git add -A/--all`, `git commit -a`, `git push --force/-f`

@@ -52,8 +52,8 @@ Implement the next planned task. Does **not** commit.
 - Reads the plan file.
 - Reads all files listed in `## Files` as initial context.
 - **Staleness check:** reads the `started:` timestamp from the plan's YAML frontmatter and runs `git log --since=<started-timestamp> -- <file1> <file2> ...` for the listed files. If changes are found, re-reads affected files and revises plan steps before proceeding.
-- Implements each `- [ ]` step, marking as `- [x]` immediately after completion.
-- If a step fails: marks `- [!]` and blocks the task via script.
+- Implements each `- [ ]` step. After completing each step, runs `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py <plan-file>` to mark it `[x]`.
+- If a step fails: runs `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py <plan-file> "<reason>"` to mark it `[!]`, then blocks the backlog task via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py doc/backlog.md "<reason>"`.
 - Runs build + test after all steps (detect project language and use the matching `{lang}-build` skill — see `@taskmill:workflow` Language Detection).
 - If all steps complete: deletes task from `doc/backlog.md` (via `--delete`), updates `doc/changelog.md`.
 - Does **not** commit — user calls `commit` when ready.
@@ -205,8 +205,8 @@ Retry the first blocked task.
 
 - Finds first `[!]` task with `plan:` sub-bullet in `doc/backlog.md`.
 - Reads plan file, finds first `- [!]` step (or first `- [ ]` if no `[!]`).
-- Implements remaining steps, marking as `- [x]`.
-- If a step fails again: marks `- [!]` and stays blocked.
+- Implements remaining steps. After completing each step, runs `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py <plan-file>` to mark it `[x]`.
+- If a step fails again: runs `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py <plan-file> "<reason>"` to mark it `[!]` and stays blocked.
 - If all steps complete: deletes task from `doc/backlog.md` (via `--delete`), updates changelog.
 - Does **not** commit.
 
@@ -244,7 +244,7 @@ backlog.md          discuss                  .llm/plans/
                            │                      │
                        finalize               do
                            │                      │
-                   adds plan: link         marks [x] per step
+                   adds plan: link         marks [x] via script
                    in backlog.md           runs build+test
                                                   │
                                            commit (manual)

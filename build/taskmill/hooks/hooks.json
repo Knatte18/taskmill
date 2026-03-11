@@ -3,11 +3,11 @@
     "PreToolUse": [
       {
         "matcher": "Edit",
-        "hooks": [{"type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate-backlog.sh"}]
+        "hooks": [{"type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate-protected-files.sh"}]
       },
       {
         "matcher": "Write",
-        "hooks": [{"type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate-backlog.sh"}]
+        "hooks": [{"type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate-protected-files.sh"}]
       },
       {
         "matcher": "Bash",

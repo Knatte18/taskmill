@@ -17,8 +17,8 @@ Implement the next planned task and commit. Combines `do` then `commit`.
 3. Read the plan file.
 4. Read all files listed in `## Files` as initial context.
 5. **Staleness check:** read the `started:` timestamp from the plan's YAML frontmatter and run `git log --since=<started-timestamp> -- <file1> <file2> ...` for the listed files. If changes are found, re-read affected files and revise plan steps before proceeding.
-6. Implement each `- [ ]` step, marking as `- [x]` immediately after completion.
-7. If a step fails: mark `- [!]` and block the task via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py`.
+6. Implement each `- [ ]` step. After completing each step, run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py <plan-file>` to mark it `[x]`.
+7. If a step fails: run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py <plan-file> "<reason>"` to mark it `[!]`, then block the backlog task via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py doc/backlog.md "<reason>"`.
 8. Run build + test after all steps (detect project language and use the matching `{lang}-build` skill — see `@taskmill:workflow` Language Detection).
 9. If all steps complete: run `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py --delete doc/backlog.md`, then update `doc/changelog.md`.
 10. Commit and push: stage files individually, commit with title + bullet-point format, push. Set upstream if needed.

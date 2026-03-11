@@ -41,9 +41,11 @@ If multiple languages are present, use the skills matching the files being edite
 
 ---
 
-## Backlog Mutations
+## Protected File Mutations
 
-Never use Edit or Write on `doc/backlog.md`. All mutations must go through scripts:
+Never use Edit or Write on `doc/backlog.md` or `.llm/plans/*.md`. All mutations must go through scripts. Reading with Read is allowed.
+
+### Backlog (`doc/backlog.md`)
 
 | Action | Script |
 |--------|--------|
@@ -52,8 +54,18 @@ Never use Edit or Write on `doc/backlog.md`. All mutations must go through scrip
 | Set planned + link plan | `task_plan.py` |
 | Complete / delete | `task_complete.py` |
 | Block with reason | `task_block.py` |
+| Add/update sub-bullet | `task_subbullet.py` |
 
-Reading `doc/backlog.md` with the Read tool is allowed.
+### Plan files (`.llm/plans/*.md`)
+
+Write is allowed for initial creation only (the `finalize` command creates the file). After creation, all mutations go through scripts:
+
+| Action | Script |
+|--------|--------|
+| Mark step done | `task_complete.py` |
+| Mark step blocked | `task_block.py` |
+| Add/update sub-bullet | `task_subbullet.py` |
+| Set finished timestamp | `plan_finish.py` |
 
 ---
 
@@ -61,6 +73,6 @@ Reading `doc/backlog.md` with the Read tool is allowed.
 
 - Run build + tests after each completed task (see Language Detection above to select the correct `{lang}-build` skill).
 - When a task is fully complete, update:
-  1. The plan file (all steps marked `[x]`)
+  1. The plan file (all steps marked `[x]` via `task_complete.py`, then `plan_finish.py` to set `finished:` timestamp)
   2. `doc/backlog.md` (task entry deleted via `task_complete.py --delete`)
   3. `doc/changelog.md` (dated entry describing what was done)
