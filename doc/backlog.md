@@ -1,1 +1,4 @@
 # Backlog
+
+- [ ] **Bug**
+  task_complete.py --delete cannot target [p] tasks: task_complete.py always picks the first [ ] task, even when the intended target is a [p] task. This caused it to delete two unrelated [ ] tasks before the [p] task could be reached. Steps to reproduce: Have a backlog with [ ] tasks above or below a [p] task. Run task_complete.py --delete doc/backlog.md. It deletes the first [ ] task instead of the [p] task. Expected: The script should accept a task name argument (substring match, like task_plan.py does) so a specific task can be targeted for completion/deletion. Workaround used: Changed [p] to [ ] via task_plan.py --state ' ', then ran task_complete.py --delete. This required the [p] task to be the first [ ] in the file. Impact: Two tasks were incorrectly deleted and had to be manually re-added via task_add.py, which also changed their ordering.

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-12 **Renamed all skills to mill- prefix**
+- Added `mill-` prefix to all 29 skill `name:` fields to avoid Claude Code short-alias collisions (e.g. `/commit` → `/mill-commit`)
+- Updated BUILD.md mapping: `skill-<name>.md` → `build/taskmill/skills/mill-<name>/SKILL.md`
+- Updated all `@taskmill:` cross-references across 14 skill files to use `mill-` prefix
+- Updated `~/.claude/CLAUDE.md` startup references to `taskmill:mill-conversation`, `taskmill:mill-llm-context`, `taskmill:mill-workflow`
+
 ## 2026-03-12 **Converted commands to verbatim-copied skills**
 - Created 14 skill source files in `doc/taskflow/commands/` (one per command), replacing LLM-generated command files that drifted on each rebuild
 - Replaced `${CLAUDE_PLUGIN_ROOT}` with `${CLAUDE_SKILL_DIR}/../..` in all script paths (skills use a different variable)

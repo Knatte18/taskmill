@@ -56,7 +56,7 @@ Implement the next planned task. Does **not** commit.
 - **Staleness check:** reads the `started:` timestamp from the plan's YAML frontmatter and runs `git log --since=<started-timestamp> -- <file1> <file2> ...` for the listed files. If changes are found, re-reads affected files and revises plan steps before proceeding.
 - Implements each `- [ ]` step. After completing each step, runs `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_complete.py <plan-file>` to mark it `[x]`.
 - If a step fails: runs `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py <plan-file> "<reason>"` to mark it `[!]`, then blocks the backlog task via `python ${CLAUDE_PLUGIN_ROOT}/scripts/task_block.py doc/backlog.md "<reason>"`.
-- Runs build + test after all steps (detect project language and use the matching `{lang}-build` skill — see `@taskmill:workflow` Language Detection).
+- Runs build + test after all steps (detect project language and use the matching `{lang}-build` skill — see `@taskmill:mill-workflow` Language Detection).
 - If all steps complete: deletes task from `doc/backlog.md` (via `--delete`), updates `doc/changelog.md`.
 - Does **not** commit — user calls `commit` when ready.
 
@@ -173,7 +173,7 @@ Commit and push. No rebase.
 
 **Frontmatter:** `argument-hint: "[--onmain] [message]"`
 
-- See `@taskmill:git` for full commit rules.
+- See `@taskmill:mill-git` for full commit rules.
 - **If on `main`/`master` and `--onmain` is not in the argument:** refuse to commit. Suggest a branch name based on the staged changes or recent context (e.g. `feature/revise-git-workflow`), prompt the user to confirm or provide an alternative name, then stop. Do not create the branch — `commit` only commits.
 - **If on `main`/`master` and `--onmain` is in the argument:** proceed normally.
 - Stages files individually, commits with title + bullet-point format, pushes.

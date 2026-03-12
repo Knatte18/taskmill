@@ -32,15 +32,15 @@ Generate the plugin manifest:
 }
 ```
 
-### All skills → `build/taskmill/skills/<name>/SKILL.md`
+### All skills → `build/taskmill/skills/mill-<name>/SKILL.md`
 
-Every `skill-*.md` becomes a SKILL.md file in its own directory:
+Every `skill-*.md` becomes a SKILL.md file in its own directory, with a `mill-` prefix on the output directory name:
 
-- `skill-<name>.md` → `build/taskmill/skills/<name>/SKILL.md`
-- Language subfolders get a prefix: `doc/coding/csharp/skill-comments.md` → `build/taskmill/skills/csharp-comments/SKILL.md`
+- `skill-<name>.md` → `build/taskmill/skills/mill-<name>/SKILL.md`
+- Language subfolders get a prefix: `doc/coding/csharp/skill-comments.md` → `build/taskmill/skills/mill-csharp-comments/SKILL.md`
 - **Exception:** `skill-scripts.md` is not a skill — it is the source for scripts. `skill-commands.md` is a reference doc and is also excluded.
 
-**Skill files in `doc/` are plugin-ready.** They already contain YAML frontmatter (`name`, `description`) and use `@taskmill:<name>` cross-references. The build step copies each skill file verbatim into its output path — no transformation is applied.
+**Skill files in `doc/` are plugin-ready.** They already contain YAML frontmatter (`name`, `description`) and use `@taskmill:mill-<name>` cross-references. The build step copies each skill file verbatim into its output path — no transformation is applied.
 
 ### Scripts → `build/taskmill/scripts/`
 
@@ -71,35 +71,35 @@ build/taskmill/
 ├── .claude-plugin/
 │   └── plugin.json              (plugin manifest)
 ├── skills/
-│   ├── conversation/SKILL.md    (core — loads on startup)
-│   ├── workflow/SKILL.md        (core — loads on startup)
-│   ├── llm-context/SKILL.md     (core — loads on startup)
-│   ├── formats/SKILL.md
-│   ├── code-quality/SKILL.md
-│   ├── cli/SKILL.md
-│   ├── testing/SKILL.md
-│   ├── linting/SKILL.md
-│   ├── git/SKILL.md
-│   ├── csharp-build/SKILL.md
-│   ├── csharp-comments/SKILL.md
-│   ├── csharp-testing/SKILL.md
-│   ├── python-build/SKILL.md
-│   ├── python-comments/SKILL.md
-│   ├── python-testing/SKILL.md
-│   ├── discuss/SKILL.md         (command skills — verbatim from doc/taskflow/)
-│   ├── finalize/SKILL.md
-│   ├── do/SKILL.md
-│   ├── do-commit/SKILL.md
-│   ├── do-all/SKILL.md
-│   ├── finalize-do/SKILL.md
-│   ├── finalize-do-commit/SKILL.md
-│   ├── finalize-do-all/SKILL.md
-│   ├── commit/SKILL.md
-│   ├── list/SKILL.md
-│   ├── add/SKILL.md
-│   ├── add-discuss/SKILL.md
-│   ├── log/SKILL.md
-│   └── retry/SKILL.md
+│   ├── mill-conversation/SKILL.md    (core — loads on startup)
+│   ├── mill-workflow/SKILL.md        (core — loads on startup)
+│   ├── mill-llm-context/SKILL.md     (core — loads on startup)
+│   ├── mill-formats/SKILL.md
+│   ├── mill-code-quality/SKILL.md
+│   ├── mill-cli/SKILL.md
+│   ├── mill-testing/SKILL.md
+│   ├── mill-linting/SKILL.md
+│   ├── mill-git/SKILL.md
+│   ├── mill-csharp-build/SKILL.md
+│   ├── mill-csharp-comments/SKILL.md
+│   ├── mill-csharp-testing/SKILL.md
+│   ├── mill-python-build/SKILL.md
+│   ├── mill-python-comments/SKILL.md
+│   ├── mill-python-testing/SKILL.md
+│   ├── mill-discuss/SKILL.md         (command skills — verbatim from doc/taskflow/)
+│   ├── mill-finalize/SKILL.md
+│   ├── mill-do/SKILL.md
+│   ├── mill-do-commit/SKILL.md
+│   ├── mill-do-all/SKILL.md
+│   ├── mill-finalize-do/SKILL.md
+│   ├── mill-finalize-do-commit/SKILL.md
+│   ├── mill-finalize-do-all/SKILL.md
+│   ├── mill-commit/SKILL.md
+│   ├── mill-list/SKILL.md
+│   ├── mill-add/SKILL.md
+│   ├── mill-add-discuss/SKILL.md
+│   ├── mill-log/SKILL.md
+│   └── mill-retry/SKILL.md
 ├── scripts/
 │   ├── lib/
 │   │   ├── __init__.py          (empty — makes lib a package)
