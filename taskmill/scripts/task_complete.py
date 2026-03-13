@@ -25,7 +25,7 @@ def main():
         if args.task_name:
             idx = find_task(lines, name=args.task_name, top_level_only=False)
         else:
-            idx = find_task(lines, states=[' ', '>', 'p'], top_level_only=False)
+            idx = find_task(lines, states=[' ', '>', 'p', '!'], top_level_only=False)
 
         if idx is None:
             print('No incomplete items found.', file=sys.stderr)

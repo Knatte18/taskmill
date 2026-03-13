@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-13 **Added task_unblock.py and blocked-item completion**
+- Created `task_unblock.py`: transitions `[!]` → `[ ]` and removes the `blocked:` sub-bullet
+- Added `remove_subbullet(lines, idx, key)` to `lib/subbullet.py`
+- Updated `task_complete.py` no-name states from `[' ', '>', 'p']` to `[' ', '>', 'p', '!']` (blocked items completed last)
+- Added test suite: `test_subbullet.py` (6 tests), `test_unblock.py` (4 tests), `test_complete.py` (3 tests)
+
 ## 2026-03-13 **Updated doc/ reference files after build elimination**
 - Added `find_incomplete()` documentation to `skill-scripts.md` (was missing from `lib/parsing.py` section)
 - Fixed `change_state()` regex in `skill-scripts.md` to match actual implementation: `[> p1-9!x]` (was `[> p1-9!]`)
