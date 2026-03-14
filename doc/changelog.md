@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-03-14 **Added requirements.txt for plugin Python dependencies**
+- Created `taskmill/requirements.txt` with `filelock` as declared dependency
+- Updated deploy skill to run `pip install -r` after plugin installation
+- Added Python and pip as prerequisites in `INSTALL.md`
+
 ## 2026-03-13 **Added task_unblock.py and blocked-item completion**
 - Created `task_unblock.py`: transitions `[!]` → `[ ]` and removes the `blocked:` sub-bullet
 - Added `remove_subbullet(lines, idx, key)` to `lib/subbullet.py`

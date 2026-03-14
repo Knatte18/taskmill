@@ -10,7 +10,8 @@ Reinstall the taskmill plugin from the local marketplace.
 
 1. Run `claude plugin uninstall taskmill@taskmill` (ignore errors if not yet installed).
 2. Run `claude plugin install taskmill@taskmill`.
-3. Print confirmation that the plugin was reinstalled.
+3. Run `pip install -r taskmill/requirements.txt` to install Python dependencies.
+4. Print confirmation that the plugin was reinstalled.
 
 ## First-time setup
 

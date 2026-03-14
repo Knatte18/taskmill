@@ -7,6 +7,7 @@ How to install the taskmill plugin for Claude Code.
 ## Prerequisites
 
 - [Claude Code](https://claude.com/claude-code) CLI installed and on your PATH.
+- Python 3 and pip installed and on your PATH.
 - This repository cloned locally (e.g. `c:\Code\taskmill`).
 
 ---
@@ -31,7 +32,13 @@ claude plugin install taskmill@taskmill
 
 The plugin source is `taskmill/` at the repo root. There is no build step.
 
-### 3. Start a new session
+### 3. Install Python dependencies
+
+```
+pip install -r taskmill/requirements.txt
+```
+
+### 4. Start a new session
 
 Close and reopen Claude Code so it picks up the installed plugin.
 
