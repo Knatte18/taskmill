@@ -19,6 +19,10 @@ def main():
                         help='Delete the entry instead of marking [x]')
     args = parser.parse_args()
 
+    if is_backlog(args.file) and args.task_name is None:
+        print('task_name is required for backlog operations.', file=sys.stderr)
+        sys.exit(1)
+
     with locked(args.file):
         lines = read_lines(args.file)
 

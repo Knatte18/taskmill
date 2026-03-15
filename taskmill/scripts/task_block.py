@@ -20,6 +20,10 @@ def main():
                         help='Task name (case-insensitive substring match)')
     args = parser.parse_args()
 
+    if is_backlog(args.file) and args.name is None:
+        print('--name is required for backlog operations.', file=sys.stderr)
+        sys.exit(1)
+
     with locked(args.file):
         lines = read_lines(args.file)
 

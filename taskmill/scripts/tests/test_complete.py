@@ -65,3 +65,32 @@ def test_name_targets_blocked_item_directly(tmp_path):
     # Others untouched.
     assert '- [ ] **Step A**\n' in content
     assert '- [ ] **Step C**\n' in content
+
+
+def test_backlog_requires_task_name(tmp_path):
+    f = tmp_path / 'backlog.md'
+    f.write_text('- [ ] **Task A**\n- [ ] **Task B**\n')
+    rc, _, stderr = run_complete(f)
+    assert rc == 1
+    assert 'required' in stderr.lower()
+    # File unchanged.
+    assert f.read_text() == '- [ ] **Task A**\n- [ ] **Task B**\n'
+
+
+def test_backlog_works_with_task_name(tmp_path):
+    f = tmp_path / 'backlog.md'
+    f.write_text('- [ ] **Task A**\n- [ ] **Task B**\n')
+    rc, stdout, _ = run_complete(f, task_name='Task B')
+    assert rc == 0
+    assert 'Task B' in stdout
+    content = f.read_text()
+    assert '- [x] **Task B**' in content
+    assert '- [ ] **Task A**' in content
+
+
+def test_non_backlog_works_without_task_name(tmp_path):
+    f = tmp_path / 'plan.md'
+    f.write_text('- [ ] **Step A**\n- [ ] **Step B**\n')
+    rc, stdout, _ = run_complete(f)
+    assert rc == 0
+    assert 'Step A' in stdout

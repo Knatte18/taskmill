@@ -79,3 +79,19 @@ def test_unblock_removes_blocked_subbullet_preserves_others(tmp_path):
     assert '- [ ] **Task**\n' in content
     assert 'plan: .llm/plans/some-plan.md' in content
     assert 'blocked:' not in content
+
+
+def test_backlog_requires_name(tmp_path):
+    f = tmp_path / 'backlog.md'
+    f.write_text('- [!] **Task A**\n  - blocked: reason\n')
+    rc, _, stderr = run_unblock(f)
+    assert rc == 1
+    assert 'required' in stderr.lower()
+
+
+def test_backlog_works_with_name(tmp_path):
+    f = tmp_path / 'backlog.md'
+    f.write_text('- [!] **Task A**\n  - blocked: reason\n')
+    rc, stdout, _ = run_unblock(f, name='Task A')
+    assert rc == 0
+    assert 'Task A' in stdout

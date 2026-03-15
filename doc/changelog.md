@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-03-15 **Required task_name for backlog mutations**
+- `task_complete.py`, `task_block.py`, `task_unblock.py` now exit with an error when operating on `backlog.md` without a task name
+- Plan files retain implicit "find first incomplete" behavior
+- Updated `mill-do` and `mill-retry` skill instructions to pass task name
+- Added tests for all three scripts
+
 ## 2026-03-14 **Added requirements.txt for plugin Python dependencies**
 - Created `taskmill/requirements.txt` with `filelock` as declared dependency
 - Updated deploy skill to run `pip install -r` after plugin installation
