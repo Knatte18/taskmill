@@ -9,7 +9,7 @@ Defines the format for backlog, changelog, and plan files.
 
 ---
 
-## doc/backlog.md (tracked)
+## _taskmill/backlog.md (tracked)
 
 High-level task list. Manually maintained by the user, updated by commands.
 
@@ -44,18 +44,18 @@ High-level task list. Manually maintained by the user, updated by commands.
 | `[p]` | Planned (has plan file) | `finalize` |
 | `[!]` | Blocked (with reason) | `task_block.py` script |
 
-Completed tasks are deleted from the backlog (via `task_complete.py --delete`) since `doc/changelog.md` already records them. The `[x]` state is only used in plan files for step tracking.
+Completed tasks are deleted from the backlog (via `task_complete.py --delete`) since `_taskmill/changelog.md` already records them. The `[x]` state is only used in plan files for step tracking.
 
 **Sub-bullets:**
 - `plan: <path>` — links to the implementation plan file
 - `started: <ISO 8601 UTC timestamp>` — records when discussion began (written by `discuss`)
 - `blocked: <reason>` — explains why a task is blocked
 
-**Mutation rule:** Never use Edit or Write on `doc/backlog.md`. All mutations must go through scripts in `scripts/` (e.g. `task_plan.py`, `task_complete.py`, `task_block.py`). Reading with Read is allowed.
+**Mutation rule:** Never use Edit or Write on `_taskmill/backlog.md`. All mutations must go through scripts in `scripts/` (e.g. `task_plan.py`, `task_complete.py`, `task_block.py`). Reading with Read is allowed.
 
 ---
 
-## doc/changelog.md (tracked)
+## _taskmill/changelog.md (tracked)
 
 Dated log of completed work. Each entry gets its own heading with date and bold title. Newest entries first. Date repeats if multiple tasks complete on the same day.
 

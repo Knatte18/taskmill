@@ -1,5 +1,5 @@
 #!/bin/bash
-# PreToolUse hook: block direct edits to doc/backlog.md and .llm/plans/*.md.
+# PreToolUse hook: block direct edits to _taskmill/backlog.md and .llm/plans/*.md.
 # Tool input JSON is passed via stdin.
 set -euo pipefail
 

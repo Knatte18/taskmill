@@ -18,4 +18,4 @@ Generate a work-journal entry from recent git commits. Prints to stdout only —
 5. Start directly with the substance. No preamble like "Today's work...", "This session...", "The main focus was...".
 6. Write for a non-technical audience (CEO, stakeholders). Describe work in domain terms. No file paths, no variable/parameter names, no class names, no code references.
 7. Print the entry to stdout. Do NOT read or write any files.
-8. Do NOT read `doc/changelog.md`.
+8. Do NOT read `_taskmill/changelog.md`.

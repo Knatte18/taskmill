@@ -2,7 +2,7 @@
 
 > **Source of truth:** Scripts in `taskmill/scripts/` are the authoritative implementation. This file is reference documentation only.
 
-Python scripts that operate on files with `- [ ]` checkbox format. Same scripts work for `doc/backlog.md` and `.llm/plans/*.md`.
+Python scripts that operate on files with `- [ ]` checkbox format. Same scripts work for `_taskmill/backlog.md` and `.llm/plans/*.md`.
 
 **Purpose:** Reduce token usage. CC does not read the entire file — it gets only the relevant extract via script output.
 
@@ -88,7 +88,7 @@ File I/O helpers.
 
 ### lib/backlog_format.py
 
-Shared normalization for `doc/backlog.md` formatting. Moved from top-level `backlog_format.py`.
+Shared normalization for `_taskmill/backlog.md` formatting. Moved from top-level `backlog_format.py`.
 
 **`normalize_backlog(text: str) -> str`** — normalize backlog content.
 
@@ -169,7 +169,7 @@ If no name: calls `find_task(lines, states=[' ', '>', 'p'], top_level_only=False
 
 Default: calls `change_state(line, 'x')` to mark done.
 
-With `--delete`: calls `delete_block()` to remove the entry entirely. Used for backlog tasks where `doc/changelog.md` already records the completion.
+With `--delete`: calls `delete_block()` to remove the entry entirely. Used for backlog tasks where `_taskmill/changelog.md` already records the completion.
 
 Prints the matched item. Exit code 0 if found, 1 if no incomplete items.
 

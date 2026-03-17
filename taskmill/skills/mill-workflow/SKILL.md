@@ -43,9 +43,9 @@ If multiple languages are present, use the skills matching the files being edite
 
 ## Protected File Mutations
 
-Never use Edit or Write on `doc/backlog.md` or `.llm/plans/*.md`. All mutations must go through scripts. Reading with Read is allowed.
+Never use Edit or Write on `_taskmill/backlog.md` or `.llm/plans/*.md`. All mutations must go through scripts. Reading with Read is allowed.
 
-### Backlog (`doc/backlog.md`)
+### Backlog (`_taskmill/backlog.md`)
 
 | Action | Script |
 |--------|--------|
@@ -74,5 +74,5 @@ Write is allowed for initial creation only (the `finalize` command creates the f
 - Run build + tests after each completed task (see Language Detection above to select the correct `{lang}-build` skill).
 - When a task is fully complete, update:
   1. The plan file (all steps marked `[x]` via `task_complete.py`, then `plan_finish.py` to set `finished:` timestamp)
-  2. `doc/backlog.md` (task entry deleted via `task_complete.py --delete`)
-  3. `doc/changelog.md` (dated entry describing what was done)
+  2. `_taskmill/backlog.md` (task entry deleted via `task_complete.py --delete`)
+  3. `_taskmill/changelog.md` (dated entry describing what was done)

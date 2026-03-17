@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-03-17 **Renamed doc/ to _taskmill/**
+- Renamed `doc/` directory to `_taskmill/` so task management files don't mix with project documentation
+- Updated all 13 skill files and the hook script to reference `_taskmill/backlog.md` and `_taskmill/changelog.md`
+- Moved `skill-scripts.md` (API reference) to `taskmill/doc/`
+- Deleted stale copies from `doc/taskflow/`: `skill-commands.md`, `hooks.json`, three `.sh` files
+- `.llm/` stays at repo root, unchanged
+
 ## 2026-03-15 **Required task_name for backlog mutations**
 - `task_complete.py`, `task_block.py`, `task_unblock.py` now exit with an error when operating on `backlog.md` without a task name
 - Plan files retain implicit "find first incomplete" behavior

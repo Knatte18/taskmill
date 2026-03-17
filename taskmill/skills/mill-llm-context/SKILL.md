@@ -13,7 +13,7 @@ Rules for directory structure, file placement, and scratch file management.
 
 ```
 <project>/
-├── doc/
+├── _taskmill/
 │   ├── backlog.md        ← Tracked. High-level task list with [ ]/[>]/[p]/[!]/[x] states.
 │   └── changelog.md      ← Tracked. Dated log of completed work.
 └── .llm/                 ← Untracked. Plans, scratch files, working details.
@@ -24,7 +24,7 @@ Rules for directory structure, file placement, and scratch file management.
 ## Rules
 
 - `.llm/` is **never** committed. It must be in `.gitignore` via `**/.llm/`.
-- `doc/backlog.md` and `doc/changelog.md` are **tracked** in version control.
+- `_taskmill/backlog.md` and `_taskmill/changelog.md` are **tracked** in version control.
 - Plans are stored in `.llm/plans/YYYY-MM-DD-HHMMSS-<slug>.md` (date and time with seconds are UTC at plan creation).
 - When creating `.llm/` for the first time, verify that `**/.llm/` is in `.gitignore`.
 

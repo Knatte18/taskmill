@@ -8,7 +8,7 @@ Discuss a backlog task. Does **not** write a plan.
 
 ## Steps
 
-1. Run `python ${CLAUDE_SKILL_DIR}/../../scripts/task_claim.py doc/backlog.md <task-name>` to find and claim the task.
+1. Run `python ${CLAUDE_SKILL_DIR}/../../scripts/task_claim.py _taskmill/backlog.md <task-name>` to find and claim the task.
    - If a task name argument was provided, pass it to the script.
    - If no argument, the script selects the first `[>]`, then first `[ ]`.
    - `[N]` tasks (already claimed by another thread) are skipped.
@@ -20,5 +20,5 @@ Discuss a backlog task. Does **not** write a plan.
 ## Rules
 
 - Do not enter plan mode or write plan files. This command is discussion only.
-- Do not edit any files other than `doc/backlog.md` (for claiming the task). No code edits, no file creation.
+- Do not edit any files other than `_taskmill/backlog.md` (for claiming the task). No code edits, no file creation.
 - Use @taskmill:mill-formats skill for backlog format rules.
